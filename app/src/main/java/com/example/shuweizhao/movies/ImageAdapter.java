@@ -1,7 +1,6 @@
 package com.example.shuweizhao.movies;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,28 +16,28 @@ import java.util.ArrayList;
  */
 public class ImageAdapter extends BaseAdapter {
 
-    private ArrayList<Bitmap> bitmaps;
+    private ArrayList<String> imageInfo;
     private Context context;
     private FrameLayout layout;
     private GridView gv;
-    public ImageAdapter(ArrayList<Bitmap> bitmaps, Context context, GridView gv) {
-        this.bitmaps = bitmaps;
+    public ImageAdapter(ArrayList<String> imageInfo, Context context, GridView gv) {
+        this.imageInfo = imageInfo;
         this.context = context;
         this.gv = gv;
     }
     @Override
     public int getCount() {
-        return 18;
+        return imageInfo.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return imageInfo.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -49,6 +48,9 @@ public class ImageAdapter extends BaseAdapter {
                 gv.getHeight()/4);
         layout.setLayoutParams(param);
         ImageView imageView = (ImageView)layout.findViewById(R.id.grid_image);
+        String movie = imageInfo.get(position);
+        String[] movieDetail = movie.split("\n");
+
         imageView.setImageResource(R.mipmap.kf3);
         return layout;
     }

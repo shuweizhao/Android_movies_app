@@ -29,6 +29,8 @@ public class FragmentDisplay extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FetchDataTask fetchDataTask = new FetchDataTask();
+        fetchDataTask.execute("top_rated");
     }
 
     @Nullable
