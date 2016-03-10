@@ -1,13 +1,15 @@
 package com.example.shuweizhao.movies;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.ImageView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 
@@ -20,7 +22,7 @@ public class ImageAdapter extends BaseAdapter {
     private Context context;
     private FrameLayout layout;
     private GridView gv;
-    public ImageAdapter(ArrayList<String> imageInfo, Context context, GridView gv) {
+    public ImageAdapter(ArrayList<String> imageInfo, Context context) {
         this.imageInfo = imageInfo;
         this.context = context;
         this.gv = gv;
@@ -44,14 +46,15 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         FrameLayout layout = (FrameLayout)layoutInflater.inflate(R.layout.grid_image, null);
-        ViewGroup.LayoutParams param = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                gv.getHeight()/4);
-        layout.setLayoutParams(param);
-        ImageView imageView = (ImageView)layout.findViewById(R.id.grid_image);
+        //ViewGroup.LayoutParams param = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        //        gv.getHeight()/4);
+        //layout.setLayoutParams(param);
+        SimpleDraweeView draweeView = (SimpleDraweeView)layout.findViewById(R.id.grid_image);
         String movie = imageInfo.get(position);
         String[] movieDetail = movie.split("\n");
-
-        imageView.setImageResource(R.mipmap.kf3);
+        String posterpath = movieDetail[1];
+        Uri uri = Uri.parse("http://image.tmdb.org/t/p/w185" + posterpath);
+        draweeView.setImageURI(uri);
         return layout;
     }
 }

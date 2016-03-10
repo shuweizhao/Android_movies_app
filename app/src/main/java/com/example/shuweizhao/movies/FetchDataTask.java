@@ -1,8 +1,10 @@
 package com.example.shuweizhao.movies;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.GridView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +16,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by shuweizhao on 3/9/16.
@@ -21,6 +25,15 @@ import java.net.URL;
 public class FetchDataTask extends AsyncTask<String, Void, String[]> {
     public static final String LOG_TAG = FetchDataTask.class.getSimpleName();
 
+    private final Context mContext;
+    private ImageAdapter adapter;
+    private GridView gv;
+
+    public FetchDataTask (Context context, ImageAdapter adapter, GridView gv) {
+        mContext = context;
+        this.adapter = adapter;
+        this.gv = gv;
+    }
     private String[] getMovieDataFromJson(String movieDataJson)
     throws JSONException{
         final String POSTERPATH = "poster_path";
@@ -121,6 +134,8 @@ public class FetchDataTask extends AsyncTask<String, Void, String[]> {
     @Override
     protected void onPostExecute(String[] strings) {
         super.onPostExecute(strings);
-
+        ArrayList<String> movieInfo = new ArrayList<>(Arrays.asList(strings));
+        adapter = new ImageAdapter(movieInfo, mContext);
+        gv.setAdapter(adapter);
     }
 }
