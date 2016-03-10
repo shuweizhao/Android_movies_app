@@ -26,7 +26,7 @@ public class FetchDataTask extends AsyncTask<String, Void, String[]> {
     public static final String LOG_TAG = FetchDataTask.class.getSimpleName();
 
     private final Context mContext;
-    private ImageAdapter adapter;
+    public static ImageAdapter adapter;
     private GridView gv;
 
     public FetchDataTask (Context context, ImageAdapter adapter, GridView gv) {

@@ -51,7 +51,8 @@ public class FragmentDisplay extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getActivity(), DetailActivity.class);
-                String movieInfo = (String)imageAdapter.getItem(position);
+                //illegal
+                String movieInfo = FetchDataTask.adapter.getItem(position);
                 i.putExtra(Intent.EXTRA_TEXT, movieInfo);
                 startActivity(i);
             }
