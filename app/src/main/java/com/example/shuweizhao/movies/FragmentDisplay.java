@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,7 +20,7 @@ import java.util.ArrayList;
 public class FragmentDisplay extends android.support.v4.app.Fragment {
     private ImageAdapter imageAdapter;
     private GridView gv;
-
+    public static String choice = "popular";
     public FragmentDisplay() {
 
     }
@@ -30,6 +33,31 @@ public class FragmentDisplay extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        String temp = "";
+        if (id == R.id.popular) {
+            temp = "popular";
+        }
+        if (id == R.id.top_rated) {
+            temp = "top_rated";
+        }
+        if (!choice.equals(temp)) {
+            choice = temp;
+            FetchDataTask fetchDataTask = new FetchDataTask(getActivity(), imageAdapter, gv);
+            fetchDataTask.execute(temp);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Nullable
@@ -46,7 +74,7 @@ public class FragmentDisplay extends android.support.v4.app.Fragment {
         imageAdapter = new ImageAdapter(new ArrayList<String>(128), getActivity());
         gv.setAdapter(imageAdapter);
         FetchDataTask fetchDataTask = new FetchDataTask(getActivity(), imageAdapter, gv);
-        fetchDataTask.execute("top_rated");
+        fetchDataTask.execute(choice);
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
