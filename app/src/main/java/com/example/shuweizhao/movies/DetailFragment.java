@@ -1,6 +1,7 @@
 package com.example.shuweizhao.movies;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +17,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
  * Created by shuweizhao on 3/7/16.
  */
 public class DetailFragment extends Fragment {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
     @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -27,12 +35,14 @@ public class DetailFragment extends Fragment {
             String movieInfo = intent.getStringExtra(Intent.EXTRA_TEXT);
             params = movieInfo.split("\n");
         }
+        Typeface fonts = Typeface.createFromAsset(getContext().getAssets(), "fonts/fontawesome-webfont.ttf");
         TextView overview = (TextView) rootView.findViewById(R.id.overview_text);
         SimpleDraweeView poster = (SimpleDraweeView) rootView.findViewById(R.id.detail_poster);
         TextView title = (TextView)rootView.findViewById(R.id.detail_title);
         TextView vote_count = (TextView) rootView.findViewById(R.id.vote_average);
         TextView release_date = (TextView) rootView.findViewById(R.id.release_date);
-        title.setText("Title\n" + params[0]);
+        title.setText(params[0]);
+        title.setTypeface(fonts);
         Uri uri = Uri.parse("http://image.tmdb.org/t/p/w342" + params[1]);
         poster.setImageURI(uri);
         overview.setText(params[2]);

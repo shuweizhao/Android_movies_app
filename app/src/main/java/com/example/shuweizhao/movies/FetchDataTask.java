@@ -58,7 +58,6 @@ public class FetchDataTask extends AsyncTask<String, Void, String[]> {
             String release_date = movie.getString(RELEASEDATE) + "\n";
 
             resStr[i] = title + posterpath + overview + vote_average + release_date;
-            System.out.println(resStr[i]);
         }
         return resStr;
     }
